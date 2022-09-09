@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:48:29 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/09 18:20:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:20:09 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ void Harl::complain(std::string level)
 	log_func func = Harl::strToLogFunc(level);
 	(this->*func)();
 	std::cout << std::endl;
+}
+
+Harl::LogType Harl::strToLogType(const std::string& str)
+{
+	for (size_t i = 0; i < 4; i++)
+	{
+		if (states[i] == str)
+			return (static_cast<Harl::LogType>(i));
+	}
+	return (Harl::INVALID);
 }
 
 std::string Harl::states[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
