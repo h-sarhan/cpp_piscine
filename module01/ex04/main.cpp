@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 09:07:20 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/09 10:23:30 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/09 10:25:07 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <fstream>
 #include <string.h>
 
+
+// ! Write tests before submitting
 int	main(int argc, char **argv)
 {
 	if (argc != 4)

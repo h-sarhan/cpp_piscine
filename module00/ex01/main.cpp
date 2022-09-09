@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 14:36:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 05:38:35 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/09 13:33:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void displayPrompt(void)
 			  << "3. EXIT" << std::endl;
 }
 
+// ! Use getline instead
+// cin could could have issues with commands like "ADD SEARCH"
 int main(void)
 {
 	std::string command;
