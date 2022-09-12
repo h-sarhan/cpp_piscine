@@ -6,12 +6,14 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:36:18 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/12 11:48:50 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/12 11:51:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FIXED
 #define FIXED
+
+#include <iostream>
 
 class Fixed
 {
