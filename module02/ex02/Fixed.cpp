@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:41:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 20:07:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/14 20:12:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,97 @@ std::ostream &operator<<(std::ostream &out, const Fixed &fixed)
 {
 	out << fixed.toFloat();
 	return (out);
+}
+
+Fixed Fixed::operator+(const Fixed& rhs) const
+{
+	return (Fixed(this->toFloat() + rhs.toFloat()));
+}
+
+Fixed Fixed::operator-(const Fixed& rhs) const
+{
+	return (Fixed(this->toFloat() - rhs.toFloat()));
+}
+
+Fixed Fixed::operator*(const Fixed& rhs) const
+{
+	return (Fixed(this->toFloat() * rhs.toFloat()));
+}
+
+Fixed Fixed::operator/(const Fixed& rhs) const
+{
+	if (rhs.toFloat() != 0)
+		return (Fixed(this->toFloat() / rhs.toFloat()));
+	else
+	{
+		std::cerr << "Error: Division by zero" << std::endl;
+		return (Fixed(0));
+	}
+}
+
+bool Fixed::operator<(const Fixed& rhs) const
+{
+	return (this->toFloat() < rhs.toFloat());
+}
+
+bool Fixed::operator>(const Fixed& rhs) const
+{
+	return (this->toFloat() > rhs.toFloat());
+}
+
+bool Fixed::operator>=(const Fixed& rhs) const
+{
+	return (this->toFloat() >= rhs.toFloat());
+}
+
+bool Fixed::operator<=(const Fixed& rhs) const
+{
+	return (this->toFloat() <= rhs.toFloat());
+}
+
+bool Fixed::operator==(const Fixed& rhs) const
+{
+	return (this->toFloat() == rhs.toFloat());
+}
+
+bool Fixed::operator!=(const Fixed& rhs) const
+{
+	return (this->toFloat() != rhs.toFloat());
+}
+
+// pre-increment
+Fixed& Fixed::operator++(void)
+{
+	int fractPart = _rawBits & (pow(2, _fracBits) - 1);
+	fractPart++;
+	int intPart = (_rawBits >> _fracBits) << _fracBits;
+	_rawBits = intPart | fractPart;
+	return (*this);
+}
+
+// post-increment
+Fixed Fixed::operator++(int)
+{
+	const Fixed old(*this);
+	operator++();
+	return (old);
+}
+
+Fixed& Fixed::operator--(void)
+{
+	int fractPart = _rawBits & (pow(2, _fracBits) - 1);
+	fractPart--;
+	int intPart = (_rawBits >> _fracBits) << _fracBits;
+	_rawBits = intPart | fractPart;
+	return (*this);
+}
+
+// post-increment
+Fixed Fixed::operator--(int)
+{
+	const Fixed old(*this);
+	operator--();
+	return (old);
 }
 
 const int Fixed::_fracBits = 8;
