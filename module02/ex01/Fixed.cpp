@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:41:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 12:40:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:54:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,11 @@ Fixed::Fixed(const int num)
 	_rawBits <<= 8;
 }
 
-// // ! Try comparing the difference at every iteration of the while loop
-// Fixed::Fixed(const float num)
-// {
-// 	std::cout << "Float constructor called" << std::endl;
-// 	const int intPart = static_cast<int>(num);
-// 	const float fracPart = (num - intPart);
-// 	// std::cout << fracPart << std::endl;
-// 	_rawBits = intPart;
-// 	_rawBits <<= 8;
-// 	float sum = 0.0f;
-// 	float distance = fracPart;
-// 	float divisor;
-// 	for (int i = 1; i < _fracBits + 1; i++)
-// 	{
-// 		divisor = 1.0f / pow(2, i);
-// 		if (abs(fracPart - (sum + divisor)) < distance)
-// 		{
-// 			_rawBits |= pow(2, 8 - i);
-// 			sum += divisor;
-// 			distance = abs(fracPart - sum);
-// 		}
-		
-// 	}
-// }
-
-// * Old mostly working algorithm
 Fixed::Fixed(const float num)
 {
 	std::cout << "Float constructor called" << std::endl;
 	const int intPart = static_cast<int>(num);
-	 float fracPart = (num - intPart);
+	float fracPart = (num - intPart);
 	// std::cout << fracPart << std::endl;
 	_rawBits = intPart;
 	_rawBits <<= 8;
@@ -107,8 +81,7 @@ void Fixed::setRawBits(const int raw)
 
 int Fixed::toInt(void) const
 {
-	// ! Use roundf here on toFloat return value
-	return (roundf(toFloat()));
+	return (toFloat());
 }
 
 float Fixed::toFloat(void) const
