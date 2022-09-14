@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:41:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 20:07:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:43:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ Fixed::Fixed(void)
 {
 	std::cout << "Default constructor called" << std::endl;
 	_rawBits = 0;
-	neg = false;
+	_neg = false;
 }
 
 Fixed::Fixed(const Fixed &old)
 {
 	std::cout << "Copy constructor called" << std::endl;
 	this->_rawBits = old._rawBits;
-	this->neg = old.neg;
+	this->_neg = old._neg;
 }
 
 Fixed::Fixed(const int num)
@@ -31,13 +31,13 @@ Fixed::Fixed(const int num)
 	std::cout << "Int constructor called" << std::endl;
 	if (num < 0)
 	{
-		neg = true;
+		_neg = true;
 		_rawBits = -num;
 		_rawBits <<= _fracBits;
 	}
 	else
 	{
-		neg = false;
+		_neg = false;
 		_rawBits = num;
 		_rawBits <<= _fracBits;
 	}
@@ -50,13 +50,13 @@ Fixed::Fixed(const float num)
 	float fracPart;
 	if (num < 0)
 	{
-		neg = true;
+		_neg = true;
 		intPart = static_cast<int>(-num);
 		fracPart = (-num - intPart);
 	}
 	else
 	{
-		neg = false;
+		_neg = false;
 		intPart = static_cast<int>(num);
 		fracPart = (num - intPart);
 	}
@@ -87,7 +87,7 @@ Fixed &Fixed::operator=(const Fixed &old)
 	if (&old == this)
 		return (*this);
 	_rawBits = old.getRawBits();
-	neg = old.neg;
+	_neg = old._neg;
 	return (*this);
 }
 
@@ -119,7 +119,7 @@ float Fixed::toFloat(void) const
 	int fractPart = _rawBits & pow(2, _fracBits) - 1;
 	if (fractPart == 0)
 	{
-		if (neg == true)
+		if (_neg == true)
 		{
 			return (-intPart);
 		}
@@ -133,7 +133,7 @@ float Fixed::toFloat(void) const
 			decimal += 1.0f / pow(2, i);
 		}
 	}
-	if (neg == true)
+	if (_neg == true)
 	{
 		return (intPart + decimal) * -1;
 	}

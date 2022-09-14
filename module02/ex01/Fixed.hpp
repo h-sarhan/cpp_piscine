@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:36:18 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 18:59:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/14 21:43:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ public:
 
 private:
 	int _rawBits;
-	bool neg;
+	bool _neg;
 	static const int _fracBits;
 	static unsigned int pow(unsigned int num, unsigned int pow);
 	static float abs(float num);
