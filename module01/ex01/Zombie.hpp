@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 02:04:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/09 07:52:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/14 12:03:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 #include <string>
 #include <iostream>
+
+// ! zombieHorde has to be outside the Zombie class
 
 class Zombie
 {
