@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:41:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 16:54:45 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/14 18:59:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,52 @@ Fixed::Fixed(void)
 {
 	std::cout << "Default constructor called" << std::endl;
 	_rawBits = 0;
+	neg = false;
 }
 
 Fixed::Fixed(const Fixed &old)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	*this = old;
+	this->_rawBits = old._rawBits;
+	this->neg = old.neg;
 }
 
 Fixed::Fixed(const int num)
 {
 	std::cout << "Int constructor called" << std::endl;
-	_rawBits = num;
-	_rawBits <<= 8;
+	if (num < 0)
+	{
+		neg = true;
+		_rawBits = -num;
+		_rawBits <<= _fracBits;
+	}
+	else
+	{
+		neg = false;
+		_rawBits = num;
+		_rawBits <<= _fracBits;
+	}
 }
 
 Fixed::Fixed(const float num)
 {
 	std::cout << "Float constructor called" << std::endl;
-	const int intPart = static_cast<int>(num);
-	float fracPart = (num - intPart);
-	// std::cout << fracPart << std::endl;
+	int intPart;
+	float fracPart;
+	if (num < 0)
+	{
+		neg = true;
+		intPart = static_cast<int>(-num);
+		fracPart = (-num - intPart);
+	}
+	else
+	{
+		neg = false;
+		intPart = static_cast<int>(num);
+		fracPart = (num - intPart);
+	}
 	_rawBits = intPart;
-	_rawBits <<= 8;
-	// float sum = 0.0f;
-	// float d
+	_rawBits <<= _fracBits;
 	float divisor;
 	for (int i = 1; i < _fracBits + 1; i++)
 	{
@@ -59,6 +80,7 @@ Fixed &Fixed::operator=(const Fixed &old)
 	if (&old == this)
 		return (*this);
 	_rawBits = old.getRawBits();
+	neg = old.neg;
 	return (*this);
 }
 
@@ -86,22 +108,27 @@ int Fixed::toInt(void) const
 
 float Fixed::toFloat(void) const
 {
-	float	intPart = _rawBits >> 8;
-	// std::cout << "\nRAW BITS: " << _rawBits << std::endl;
-	int		fractPart = _rawBits & 0xFF;
-	// std::cout << fractPart << std::endl;
+	float intPart = _rawBits >> _fracBits;
+	int fractPart = _rawBits & pow(2, _fracBits) - 1;
 	if (fractPart == 0)
 	{
+		if (neg == true)
+		{
+			return (-intPart);
+		}
 		return (intPart);
 	}
-	float	decimal = 0.0f;
+	float decimal = 0.0f;
 	for (int i = 1; i < _fracBits + 1; i++)
 	{
-		if (((fractPart >> (8 - i)) & 1) == 1)
+		if (((fractPart >> (_fracBits - i)) & 1) == 1)
 		{
-			// std::cout << "Adding " << 1.0f / pow(2, i) << " to " << decimal << std::endl;
 			decimal += 1.0f / pow(2, i);
 		}
+	}
+	if (neg == true)
+	{
+		return (intPart + decimal) * -1;
 	}
 	return (intPart + decimal);
 }
@@ -123,11 +150,10 @@ float Fixed::abs(float num)
 	return (num);
 }
 
-std::ostream &operator<< (std::ostream &out, const Fixed &fixed)
+std::ostream &operator<<(std::ostream &out, const Fixed &fixed)
 {
 	out << fixed.toFloat();
 	return (out);
 }
-
 
 const int Fixed::_fracBits = 8;

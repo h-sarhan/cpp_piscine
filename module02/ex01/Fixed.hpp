@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:36:18 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 12:39:57 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/14 18:59:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <iostream>
 #include <cmath>
 
-// ! Check for overflow here!!!!
-// ! Handle negative numbers
 class Fixed
 {
 public:
@@ -32,12 +30,14 @@ public:
 	void setRawBits(const int raw);
 	int toInt(void) const;
 	float toFloat(void) const;
+
 private:
 	int _rawBits;
+	bool neg;
 	static const int _fracBits;
 	static unsigned int pow(unsigned int num, unsigned int pow);
 	static float abs(float num);
 };
 
-std::ostream &operator<< (std::ostream &out, const Fixed &fixed);
+std::ostream &operator<<(std::ostream &out, const Fixed &fixed);
 #endif
