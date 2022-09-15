@@ -6,9 +6,15 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 23:34:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 03:47:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/15 04:25:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ScavTrap.hpp"
+
 // ! Add tests
-int main(){};
+int main()
+{
+	ScavTrap scav("Bob");
+	scav.attack("Fernando");
+};
