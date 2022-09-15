@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 03:51:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 04:22:10 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/15 05:40:35 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ public:
 	~ScavTrap(void);
 
 	void guardGate(void);
-// private:
+	void attack(const std::string& target);
 
 };
 

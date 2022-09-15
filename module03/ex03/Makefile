@@ -6,17 +6,17 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/04 00:48:08 by hsarhan           #+#    #+#              #
-#    Updated: 2022/09/15 05:45:12 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/09/15 06:57:20 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CXX = g++
+CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = fragtrap
+NAME = diamondtrap
 
-SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 
 OBJ := $(SRC:%.cpp=%.o)
 

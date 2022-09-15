@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FragTrap.hpp                                       :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 03:51:56 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 06:49:45 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/09/14 23:34:10 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/09/15 06:44:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRAG_TRAP
-#define FRAG_TRAP
+#include "DiamondTrap.hpp"
 
-#include "ClapTrap.hpp"
-
-class FragTrap : public ClapTrap
+// ! Add tests
+int main()
 {
-public:
-	FragTrap(void);
-	FragTrap(const std::string& name);
-	FragTrap(const FragTrap &old);
-	FragTrap &operator=(const FragTrap &rhs);
-	~FragTrap(void);
-
-	void highFivesGuys(void);
-	void attack(const std::string& target);
+	DiamondTrap diamond("Bob");
+	diamond.attack("Fernando");
+	diamond.highFivesGuys();
+	diamond.whoAmI();
+	diamond.printStats();
 };
-
-#endif
-
