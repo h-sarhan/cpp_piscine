@@ -13,13 +13,13 @@
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat(void)
-	: _name("default"), _grade(150)
+	: name("default"), _grade(150)
 {
 	std::cout << "Default Bureaucrat constructor called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const std::string name, const size_t grade)
-	: _name(name), _grade(grade)
+	: name(name), _grade(grade)
 {
 	std::cout << "Named Bureaucrat constructor called" << std::endl;
 	if (grade > 150)
@@ -33,7 +33,7 @@ Bureaucrat::Bureaucrat(const std::string name, const size_t grade)
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &old)
-	: _name(old._name), _grade(old._grade)
+	: name(old.name), _grade(old._grade)
 {
 	std::cout << "Bureaucrat copy constructor called" << std::endl;
 }
@@ -54,7 +54,7 @@ Bureaucrat::~Bureaucrat(void)
 
 const std::string &Bureaucrat::getName(void) const
 {
-	return (_name);
+	return (name);
 }
 
 size_t Bureaucrat::getGrade(void) const

@@ -1,51 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 10:30:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/16 12:51:18 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/09/16 12:46:44 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/09/16 14:16:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUREAUCRAT
-#define BUREAUCRAT
+#ifndef FORM
+#define FORM
 
 #include <string>
 #include <iostream>
-#include <exception>
 
-class Bureaucrat
+class Form
 {
 public:
+	Form(void);
+	Form(const std::string name, const size_t signingGrade, const size_t executionGrade);
+	Form(const Form &old);
+	Form &operator=(const Form &rhs);
+	~Form(void);
+
 	class GradeTooHighException : public std::exception
 	{
 		const char *what() const throw();
 	};
-	
 	class GradeTooLowException : public std::exception
 	{
 		const char *what() const throw();
 	};
 
-	Bureaucrat(void);
-	Bureaucrat(const std::string name, const size_t grade);
-	Bureaucrat(const Bureaucrat &old);
-	Bureaucrat &operator=(const Bureaucrat &rhs);
-	~Bureaucrat(void);
-
-	const std::string &getName(void) const;
-	size_t getGrade(void) const;
-	void incrementGrade(void);
-	void decrementGrade(void);
+	// void beSigned() const;
 
 private:
 	const std::string _name;
-	size_t _grade;
+	bool _signed;
+	size_t _signingGrade;
+	size_t _executionGrade;
 };
-
-std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat);
 
 #endif
