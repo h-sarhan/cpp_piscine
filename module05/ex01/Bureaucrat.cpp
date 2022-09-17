@@ -6,20 +6,20 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:35:44 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/16 12:51:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:00:27 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat(void)
-	: name("default"), _grade(150)
+	: _name("default"), _grade(150)
 {
 	std::cout << "Default Bureaucrat constructor called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const std::string name, const size_t grade)
-	: name(name), _grade(grade)
+	: _name(name), _grade(grade)
 {
 	std::cout << "Named Bureaucrat constructor called" << std::endl;
 	if (grade > 150)
@@ -33,7 +33,7 @@ Bureaucrat::Bureaucrat(const std::string name, const size_t grade)
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &old)
-	: name(old.name), _grade(old._grade)
+	: _name(old._name), _grade(old._grade)
 {
 	std::cout << "Bureaucrat copy constructor called" << std::endl;
 }
@@ -54,7 +54,7 @@ Bureaucrat::~Bureaucrat(void)
 
 const std::string &Bureaucrat::getName(void) const
 {
-	return (name);
+	return (_name);
 }
 
 size_t Bureaucrat::getGrade(void) const
@@ -93,4 +93,18 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
 {
 	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << ".";
+	return (os);
+}
+
+void Bureaucrat::signForm(Form& form)
+{
+	form.beSigned(*this);
+	if (form.getSigned() == false)
+	{
+		std::cout << this->getName() << " couldn't sign " << form.getName() << " because " << "<FILL THIS IN LATER>" << std::endl;
+	}
+	else
+	{
+		std::cout << this->getName() << " signed " << form.getName() << std::endl;
+	}
 }

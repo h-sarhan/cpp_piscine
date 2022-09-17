@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:30:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/16 12:51:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:02:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <string>
 #include <iostream>
 #include <exception>
+#include "Form.hpp"
+class Form;
 
 class Bureaucrat
 {
@@ -40,6 +42,7 @@ public:
 	size_t getGrade(void) const;
 	void incrementGrade(void);
 	void decrementGrade(void);
+	void signForm(Form& form);
 
 private:
 	const std::string _name;

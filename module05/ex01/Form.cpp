@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 12:46:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/16 14:15:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:49:28 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,22 @@ Form::Form(void)
 	  _executionGrade(10)
 {
 	std::cout << "Default form constructor called" << std::endl;
+	if (_signingGrade < 1)
+	{
+		throw GradeTooHighException();
+	}
+	else if (_signingGrade > 150)
+	{
+		throw GradeTooLowException();
+	}
+	if (_executionGrade < 1)
+	{
+		throw GradeTooHighException();
+	}
+	else if (_executionGrade > 150)
+	{
+		throw GradeTooLowException();
+	}
 }
 
 Form::Form(const std::string name, const size_t signingGrade, const size_t executionGrade)
@@ -28,6 +44,22 @@ Form::Form(const std::string name, const size_t signingGrade, const size_t execu
 	  _executionGrade(executionGrade)
 {
 	std::cout << "Form constructor called" << std::endl;
+	if (_signingGrade < 1)
+	{
+		throw GradeTooHighException();
+	}
+	else if (_signingGrade > 150)
+	{
+		throw GradeTooLowException();
+	}
+	if (_executionGrade < 1)
+	{
+		throw GradeTooHighException();
+	}
+	else if (_executionGrade > 150)
+	{
+		throw GradeTooLowException();
+	}
 }
 
 Form::Form(const Form &old)
@@ -58,10 +90,51 @@ Form::~Form(void)
 
 const char *Form::GradeTooHighException::what() const throw()
 {
-	return ("Bureacrat grade too high");
+	return ("Form grade too high");
 }
 
 const char *Form::GradeTooLowException::what() const throw()
 {
-	return ("Bureacrat grade too low");
+	return ("Form grade too low");
+}
+
+void Form::beSigned(const Bureaucrat &bureaucrat)
+{
+	if (bureaucrat.getGrade() >= _signingGrade)
+	{
+		_signed = true;
+	}
+	else
+	{
+		throw GradeTooLowException();
+	}
+}
+
+const std::string &Form::getName(void) const
+{
+	return (_name);
+}
+
+bool Form::getSigned(void) const
+{
+	return (_signed);
+}
+
+size_t Form::getSigningGrade(void) const
+{
+	return (_signingGrade);
+}
+
+size_t Form::getExecutionGrade(void) const
+{
+	return (_executionGrade);
+}
+
+std::ostream &operator<<(std::ostream &os, const Form &form)
+{
+	os << "Form name: " << form.getName() << std::endl
+	   << "Is form signed?: " << form.getSigned() << std::endl
+	   << "Form execution grade: " << form.getExecutionGrade() << std::endl
+	   << "Form signing grade: " << form.getSigningGrade() << std::endl;
+	return (os);
 }

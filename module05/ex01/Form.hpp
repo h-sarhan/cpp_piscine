@@ -6,16 +6,22 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 12:46:44 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/16 14:16:19 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:02:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FORM
 #define FORM
 
+
 #include <string>
 #include <iostream>
 
+#include "Bureaucrat.hpp"
+
+class Bureaucrat;
+
+// ! Write getters and setters
 class Form
 {
 public:
@@ -27,20 +33,25 @@ public:
 
 	class GradeTooHighException : public std::exception
 	{
-		const char *what() const throw();
+		const char *what(void) const throw();
 	};
 	class GradeTooLowException : public std::exception
 	{
-		const char *what() const throw();
+		const char *what(void) const throw();
 	};
 
-	// void beSigned() const;
+	const std::string& getName(void) const;
+	bool getSigned(void) const;
+	size_t getSigningGrade(void) const;
+	size_t getExecutionGrade(void) const;
+
+	void beSigned(const Bureaucrat& bureaucrat);
 
 private:
 	const std::string _name;
 	bool _signed;
-	size_t _signingGrade;
-	size_t _executionGrade;
+	const size_t _signingGrade;
+	const size_t _executionGrade;
 };
 
 #endif
