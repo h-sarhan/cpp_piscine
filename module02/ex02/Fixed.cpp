@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:41:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 21:43:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/18 09:06:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,244 +14,306 @@
 
 Fixed::Fixed(void)
 {
-	std::cout << "Default constructor called" << std::endl;
-	_rawBits = 0;
-	_neg = false;
+    std::cout << "Default constructor called" << std::endl;
+    _rawBits = 0;
+    _neg = false;
 }
 
 Fixed::Fixed(const Fixed &old)
 {
-	std::cout << "Copy constructor called" << std::endl;
-	this->_rawBits = old._rawBits;
-	this->_neg = old._neg;
+    std::cout << "Copy constructor called" << std::endl;
+    this->_rawBits = old._rawBits;
+    this->_neg = old._neg;
 }
 
 Fixed::Fixed(const int num)
 {
-	std::cout << "Int constructor called" << std::endl;
-	if (num < 0)
-	{
-		_neg = true;
-		_rawBits = -num;
-		_rawBits <<= _fracBits;
-	}
-	else
-	{
-		_neg = false;
-		_rawBits = num;
-		_rawBits <<= _fracBits;
-	}
+    std::cout << "Int constructor called" << std::endl;
+    if (num < 0)
+    {
+        _neg = true;
+        _rawBits = -num;
+        _rawBits <<= _fracBits;
+    }
+    else
+    {
+        _neg = false;
+        _rawBits = num;
+        _rawBits <<= _fracBits;
+    }
 }
 
 Fixed::Fixed(const float num)
 {
-	std::cout << "Float constructor called" << std::endl;
-	int intPart;
-	float fracPart;
-	if (num < 0)
-	{
-		_neg = true;
-		intPart = static_cast<int>(-num);
-		fracPart = (-num - intPart);
-	}
-	else
-	{
-		_neg = false;
-		intPart = static_cast<int>(num);
-		fracPart = (num - intPart);
-	}
-	_rawBits = intPart;
-	_rawBits <<= _fracBits;
-	float divisor;
-	for (int i = 1; i < _fracBits + 1; i++)
-	{
-		divisor = 1.0f / pow(2, i);
-		if (divisor < fracPart)
-		{
-			_rawBits |= pow(2, _fracBits - i);
-			fracPart -= divisor;
-		}
-	}
-	const float epsilon = 1.0f / pow(2, _fracBits);
-	const float current = abs(toFloat());
-	const float target = abs(num);
-	if (abs((current + epsilon) - target) < abs(current - target))
-	{
-		_rawBits++;
-	}
+    std::cout << "Float constructor called" << std::endl;
+    int intPart;
+    float fracPart;
+    if (num < 0)
+    {
+        _neg = true;
+        intPart = static_cast<int>(-num);
+        fracPart = (-num - intPart);
+    }
+    else
+    {
+        _neg = false;
+        intPart = static_cast<int>(num);
+        fracPart = (num - intPart);
+    }
+    _rawBits = intPart;
+    _rawBits <<= _fracBits;
+    float divisor;
+    for (int i = 1; i < _fracBits + 1; i++)
+    {
+        divisor = 1.0f / pow(2, i);
+        if (divisor < fracPart)
+        {
+            _rawBits |= pow(2, _fracBits - i);
+            fracPart -= divisor;
+        }
+    }
+    const float epsilon = 1.0f / pow(2, _fracBits);
+    const float current = abs(toFloat());
+    const float target = abs(num);
+    if (abs((current + epsilon) - target) < abs(current - target))
+    {
+        _rawBits++;
+    }
 }
 
 Fixed &Fixed::operator=(const Fixed &old)
 {
-	std::cout << "Copy assignment operator called" << std::endl;
-	if (&old == this)
-		return (*this);
-	_rawBits = old.getRawBits();
-	_neg = old._neg;
-	return (*this);
+    std::cout << "Copy assignment operator called" << std::endl;
+    if (&old == this)
+        return (*this);
+    _rawBits = old.getRawBits();
+    _neg = old._neg;
+    return (*this);
 }
 
-Fixed::~Fixed()
-{
-	std::cout << "Destructor called" << std::endl;
-}
+Fixed::~Fixed() { std::cout << "Destructor called" << std::endl; }
 
 int Fixed::getRawBits(void) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
-	return (_rawBits);
+    std::cout << "getRawBits member function called" << std::endl;
+    return (_rawBits);
 }
 
 void Fixed::setRawBits(const int raw)
 {
-	std::cout << "setRawBits member function called" << std::endl;
-	_rawBits = raw;
+    std::cout << "setRawBits member function called" << std::endl;
+    _rawBits = raw;
 }
 
-int Fixed::toInt(void) const
-{
-	return (toFloat());
-}
+int Fixed::toInt(void) const { return (toFloat()); }
 
 float Fixed::toFloat(void) const
 {
-	float intPart = _rawBits >> _fracBits;
-	int fractPart = _rawBits & pow(2, _fracBits) - 1;
-	if (fractPart == 0)
-	{
-		if (_neg == true)
-		{
-			return (-intPart);
-		}
-		return (intPart);
-	}
-	float decimal = 0.0f;
-	for (int i = 1; i < _fracBits + 1; i++)
-	{
-		if (((fractPart >> (_fracBits - i)) & 1) == 1)
-		{
-			decimal += 1.0f / pow(2, i);
-		}
-	}
-	if (_neg == true)
-	{
-		return (intPart + decimal) * -1;
-	}
-	return (intPart + decimal);
+    float intPart = _rawBits >> _fracBits;
+    int fractPart = _rawBits & (pow(2, _fracBits) - 1);
+    if (fractPart == 0)
+    {
+        if (_neg == true)
+        {
+            return (-intPart);
+        }
+        return (intPart);
+    }
+    float decimal = 0.0f;
+    for (int i = 1; i < _fracBits + 1; i++)
+    {
+        if (((fractPart >> (_fracBits - i)) & 1) == 1)
+        {
+            decimal += 1.0f / pow(2, i);
+        }
+    }
+    if (_neg == true)
+    {
+        return (intPart + decimal) * -1;
+    }
+    return (intPart + decimal);
 }
 
 unsigned int Fixed::pow(unsigned int num, unsigned int pow)
 {
-	unsigned int res = 1;
-	for (unsigned int i = 0; i < pow; i++)
-	{
-		res *= num;
-	}
-	return (res);
+    unsigned int res = 1;
+    for (unsigned int i = 0; i < pow; i++)
+    {
+        res *= num;
+    }
+    return (res);
 }
 
 float Fixed::abs(float num)
 {
-	if (num < 0.0f)
-		return (-num);
-	return (num);
+    if (num < 0.0f)
+        return (-num);
+    return (num);
 }
 
 std::ostream &operator<<(std::ostream &out, const Fixed &fixed)
 {
-	out << fixed.toFloat();
-	return (out);
+    out << fixed.toFloat();
+    return (out);
 }
 
-Fixed Fixed::operator+(const Fixed& rhs) const
+Fixed Fixed::operator+(const Fixed &rhs) const
 {
-	return (Fixed(this->toFloat() + rhs.toFloat()));
+    const float addition = this->toFloat() + rhs.toFloat();
+    Fixed res(addition);
+    if (addition < 0)
+    {
+        res._neg = true;
+    }
+    else
+    {
+        res._neg = false;
+    }
+    return (res);
 }
 
-Fixed Fixed::operator-(const Fixed& rhs) const
+Fixed Fixed::operator-(const Fixed &rhs) const
 {
-	return (Fixed(this->toFloat() - rhs.toFloat()));
+    const float subtraction = this->toFloat() - rhs.toFloat();
+    Fixed res(subtraction);
+    if (subtraction < 0)
+    {
+        res._neg = true;
+    }
+    else
+    {
+        res._neg = false;
+    }
+    return (res);
 }
 
-Fixed Fixed::operator*(const Fixed& rhs) const
+Fixed Fixed::operator*(const Fixed &rhs) const
 {
-	return (Fixed(this->toFloat() * rhs.toFloat()));
+    const float multiplication = this->toFloat() * rhs.toFloat();
+    Fixed res(multiplication);
+    if (multiplication < 0)
+    {
+        res._neg = true;
+    }
+    else
+    {
+        res._neg = false;
+    }
+    return (res);
 }
 
-Fixed Fixed::operator/(const Fixed& rhs) const
+Fixed Fixed::operator/(const Fixed &rhs) const
 {
-	if (rhs.toFloat() != 0)
-		return (Fixed(this->toFloat() / rhs.toFloat()));
-	else
-	{
-		std::cerr << "Error: Division by zero" << std::endl;
-		return (Fixed(0));
-	}
+    if (rhs.toFloat() != 0)
+    {
+        const float division = this->toFloat() / rhs.toFloat();
+        Fixed res(division);
+        if (division < 0)
+        {
+            res._neg = true;
+        }
+        else
+        {
+            res._neg = false;
+        }
+        return (res);
+    }
+    else
+    {
+        std::cerr << "Error: Division by zero" << std::endl;
+        return (Fixed(0));
+    }
 }
 
-bool Fixed::operator<(const Fixed& rhs) const
+bool Fixed::operator<(const Fixed &rhs) const
 {
-	return (this->toFloat() < rhs.toFloat());
+    return (this->toFloat() < rhs.toFloat());
 }
 
-bool Fixed::operator>(const Fixed& rhs) const
+bool Fixed::operator>(const Fixed &rhs) const
 {
-	return (this->toFloat() > rhs.toFloat());
+    return (this->toFloat() > rhs.toFloat());
 }
 
-bool Fixed::operator>=(const Fixed& rhs) const
+bool Fixed::operator>=(const Fixed &rhs) const
 {
-	return (this->toFloat() >= rhs.toFloat());
+    return (this->toFloat() >= rhs.toFloat());
 }
 
-bool Fixed::operator<=(const Fixed& rhs) const
+bool Fixed::operator<=(const Fixed &rhs) const
 {
-	return (this->toFloat() <= rhs.toFloat());
+    return (this->toFloat() <= rhs.toFloat());
 }
 
-bool Fixed::operator==(const Fixed& rhs) const
+bool Fixed::operator==(const Fixed &rhs) const
 {
-	return (this->toFloat() == rhs.toFloat());
+    return (this->toFloat() == rhs.toFloat());
 }
 
-bool Fixed::operator!=(const Fixed& rhs) const
+bool Fixed::operator!=(const Fixed &rhs) const
 {
-	return (this->toFloat() != rhs.toFloat());
+    return (this->toFloat() != rhs.toFloat());
 }
 
 // pre-increment
-Fixed& Fixed::operator++(void)
+Fixed &Fixed::operator++(void)
 {
-	int fractPart = _rawBits & (pow(2, _fracBits) - 1);
-	fractPart++;
-	int intPart = (_rawBits >> _fracBits) << _fracBits;
-	_rawBits = intPart | fractPart;
-	return (*this);
+    Fixed inc;
+    inc._rawBits = 1;
+    *this = operator+(inc);
+    return (*this);
 }
 
 // post-increment
 Fixed Fixed::operator++(int)
 {
-	const Fixed old(*this);
-	operator++();
-	return (old);
+    const Fixed old(*this);
+    operator++();
+    return (old);
 }
 
-Fixed& Fixed::operator--(void)
+Fixed &Fixed::operator--(void)
 {
-	int fractPart = _rawBits & (pow(2, _fracBits) - 1);
-	fractPart--;
-	int intPart = (_rawBits >> _fracBits) << _fracBits;
-	_rawBits = intPart | fractPart;
-	return (*this);
+    Fixed dec;
+    dec._rawBits = 1;
+    *this = operator-(dec);
+    return (*this);
 }
 
-// post-increment
+// post-decrement
 Fixed Fixed::operator--(int)
 {
-	const Fixed old(*this);
-	operator--();
-	return (old);
+    const Fixed old(*this);
+    operator--();
+    return (old);
+}
+
+Fixed &Fixed::min(Fixed &a, Fixed &b)
+{
+    if (a < b)
+        return (a);
+    return (b);
+}
+
+Fixed &Fixed::max(Fixed &a, Fixed &b)
+{
+    if (a > b)
+        return (a);
+    return (b);
+}
+
+const Fixed &Fixed::min(const Fixed &a, const Fixed &b)
+{
+    if (a < b)
+        return (a);
+    return (b);
+}
+
+const Fixed &Fixed::max(const Fixed &a, const Fixed &b)
+{
+    if (a > b)
+        return (a);
+    return (b);
 }
 
 const int Fixed::_fracBits = 8;
