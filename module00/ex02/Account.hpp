@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 05:49:12 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 06:19:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/18 07:24:59 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,41 @@
 #define __ACCOUNT_H__
 
 #include <ctime>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 class Account
 {
 
 public:
-	typedef Account t;
+    typedef Account t;
 
-	static int getNbAccounts(void);
-	static int getTotalAmount(void);
-	static int getNbDeposits(void);
-	static int getNbWithdrawals(void);
-	static void displayAccountsInfos(void);
+    static int getNbAccounts(void);
+    static int getTotalAmount(void);
+    static int getNbDeposits(void);
+    static int getNbWithdrawals(void);
+    static void displayAccountsInfos(void);
 
-	Account(int initial_deposit);
-	~Account(void);
+    Account(int initial_deposit);
+    ~Account(void);
 
-	void makeDeposit(int deposit);
-	bool makeWithdrawal(int withdrawal);
-	int checkAmount(void) const;
-	void displayStatus(void) const;
+    void makeDeposit(int deposit);
+    bool makeWithdrawal(int withdrawal);
+    int checkAmount(void) const;
+    void displayStatus(void) const;
 
 private:
-	static int _nbAccounts;
-	static int _totalAmount;
-	static int _totalNbDeposits;
-	static int _totalNbWithdrawals;
+    static int _nbAccounts;
+    static int _totalAmount;
+    static int _totalNbDeposits;
+    static int _totalNbWithdrawals;
 
-	static void _displayTimestamp(void);
-	int _accountIndex;
-	int _amount;
-	int _nbDeposits;
-	int _nbWithdrawals;
+    static void _displayTimestamp(void);
+    int _accountIndex;
+    int _amount;
+    int _nbDeposits;
+    int _nbWithdrawals;
 
-	Account(void);
+    Account(void);
 };
 
 // ************************************************************************** //

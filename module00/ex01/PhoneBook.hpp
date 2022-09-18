@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 14:25:24 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/07 02:01:42 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/18 07:21:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,18 @@
 
 #include "Contact.hpp"
 #include <iostream>
+#include <sstream>
 
 class PhoneBook
 {
 public:
-	PhoneBook(void);
-	void addContact(void);
-	void searchPhoneBook(void) const;
+    PhoneBook(void);
+    void addContact(void);
+    void searchPhoneBook(void) const;
 
 private:
-	void _displayContacts(void) const;
-	Contact _contacts[8];
-	size_t _contactsIdx;
+    void _displayContacts(void) const;
+    Contact _contacts[8];
+    size_t _contactsIdx;
 };
 #endif
