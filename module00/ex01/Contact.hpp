@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 14:28:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 07:11:54 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/18 07:33:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ public:
     Contact &operator=(const Contact &contact);
     void displayContactSummary(size_t idx) const;
     void displayContactDetails(void) const;
-    bool created;
+
+    bool getCreated(void) const;
 
 private:
+    bool _created;
     std::string _firstName;
     std::string _lastName;
     std::string _nickName;

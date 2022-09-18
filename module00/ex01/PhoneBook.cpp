@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 14:47:20 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 07:21:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/18 07:32:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void PhoneBook::searchPhoneBook(void) const
     }
     std::istringstream(contactIdxInput) >> contactIdx;
     if (!std::cin || contactIdx < 0 || contactIdx >= 8 ||
-        _contacts[contactIdx].created == false || validInput == false ||
+        _contacts[contactIdx].getCreated() == false || validInput == false ||
         contactIdxInput.length() == 0)
     {
         std::cout << "Invalid contact" << std::endl;
