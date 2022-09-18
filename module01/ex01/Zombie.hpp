@@ -6,29 +6,29 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 02:04:07 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 12:03:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/18 07:48:30 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ZOMBIE
 #define ZOMBIE
 
-#include <string>
 #include <iostream>
-
-// ! zombieHorde has to be outside the Zombie class
+#include <string>
 
 class Zombie
 {
 public:
-	Zombie(void);
-	Zombie(std::string name);
-	void announce(void);
-	Zombie *zombieHorde(int N, std::string name);
-	~Zombie(void);
+    Zombie(void);
+    Zombie(std::string name);
+    void announce(void);
+    ~Zombie(void);
+
+    void setName(const std::string &name);
 
 private:
-	std::string name;
+    std::string _name;
 };
 
+Zombie *zombieHorde(int N, std::string name);
 #endif

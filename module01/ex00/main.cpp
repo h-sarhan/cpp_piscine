@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 02:16:02 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 07:42:41 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/18 07:48:11 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 int main(void)
 {
-	Zombie stackZomb("stack");
-	
-	stackZomb.announce();
+    std::cout << "Creating stack zombie" << std::endl;
+    Zombie stackZomb("stack");
 
-	randomChump("Random stack zombie");
-	
-	Zombie *heapZomb = newZombie("heap");
-	heapZomb->announce();
+    stackZomb.announce();
 
-	delete heapZomb;
-	return (0);
+    std::cout << "Creating random chump" << std::endl;
+    randomChump("Random stack zombie");
+
+    std::cout << "Creating heap zombie" << std::endl;
+    Zombie *heapZomb = newZombie("heap");
+    heapZomb->announce();
+
+    delete heapZomb;
+    return (0);
 }
