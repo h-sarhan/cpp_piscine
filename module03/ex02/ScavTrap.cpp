@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 03:55:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 04:36:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:38:14 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &rhs)
 	std::cout << "ScavTrap copy assignment constructor called" << std::endl;
 	if (&rhs == this)
 		return (*this);
-
+	this->_damage = rhs._damage;
+	this->_energy = rhs._energy;
+	this->_hp = rhs._hp;
+	this->_name = rhs._name;
 	return (*this);
 }
 
