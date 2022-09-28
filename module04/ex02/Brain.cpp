@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:19:45 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 08:33:21 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:30:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ Brain &Brain::operator=(const Brain &rhs)
 Brain::~Brain(void)
 {
 	std::cout << "Calling Brain destructor" << std::endl;
+}
+
+void Brain::printFiveThoughts(void) const
+{
+	for (size_t i = 0; i < 5; i++)
+	{
+		std::cout << ideas[i] << std::endl;
+	}
 }
 
 const std::string Brain::ideaList[] = {

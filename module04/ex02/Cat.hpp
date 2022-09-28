@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 07:29:34 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 08:36:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:20:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ public:
 	virtual ~Cat(void);
 
 	void makeSound(void) const;
+	void printThoughts(void) const;
 private:
 	Brain *brain;
 

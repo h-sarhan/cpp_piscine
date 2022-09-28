@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 07:32:13 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 08:40:29 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:52:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ Cat::Cat(const Cat &old)
 	std::cout << "Calling Cat copy constructor" << std::endl;
 	brain = new Brain(*old.brain);
 	type = old.type;
-	delete old.brain;
 }
 
 Cat &Cat::operator=(const Cat &rhs)
@@ -35,7 +34,6 @@ Cat &Cat::operator=(const Cat &rhs)
 		return (*this);
 	brain = new Brain(*rhs.brain);
 	type = rhs.type;
-	delete rhs.brain;
 	return (*this);
 }
 
@@ -48,4 +46,9 @@ Cat::~Cat(void)
 void Cat::makeSound(void) const
 {
 	std::cout << "Meow 😻" << std::endl;
+}
+
+void Cat::printThoughts(void) const
+{
+	brain->printFiveThoughts();
 }
