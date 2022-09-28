@@ -6,14 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 19:06:48 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 09:10:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 14:08:50 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 #include <iostream>
 
-// ! Add more tests
 int main(void)
 {
     Fixed a(0.0f);

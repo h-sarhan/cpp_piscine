@@ -6,40 +6,45 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/14 23:12:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 14:31:40 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Point.hpp"
 
-Point::Point(void)
-	: x(0), y(0)
+Point::Point(void) : x(0), y(0)
 {
-	std::cout << "Default constructor called" << std::endl;
+    // std::cout << "Point default constructor called" << std::endl;
 }
 
-Point::Point(const float x, const float y)
-	: x(x), y(y)
+Point::Point(const float x, const float y) : x(x), y(y)
 {
-	std::cout << "Float constructor called" << std::endl;
+    // std::cout << "Point float constructor called" << std::endl;
 }
 
-Point::Point(const Point &old)
-	: x(old.x), y(old.y)
+Point::Point(const Point &old) : x(old.x), y(old.y)
 {
-	std::cout << "Copy constructor called" << std::endl;
+    // std::cout << "Point copy constructor called" << std::endl;
 }
 
-Point& Point::operator=(const Point &old)
+Point &Point::operator=(const Point &old)
 {
-	std::cout << "Copy assignment constructor called" << std::endl;
-	if (&old == this)
-		return (*this);
-	*this = Point(old);
-	return (*this); 
+    (void)old;
+    // std::cout << "Point dummy copy assignment constructor called" << std::endl;
+    return (*this);
 }
+
+bool Point::operator==(const Point &rhs) const
+{
+    return (x == rhs.x && y == rhs.y);
+}
+
 
 Point::~Point(void)
 {
-	std::cout << "Destructor constructor called" << std::endl;
+    // std::cout << "Point destructor called" << std::endl;
 }
+
+const Fixed &Point::getX(void) const { return (x); }
+
+const Fixed &Point::getY(void) const { return (y); }
