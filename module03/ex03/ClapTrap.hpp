@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 23:03:59 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 06:34:06 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:43:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ class ClapTrap
 public:
 	ClapTrap(void);
 	ClapTrap(const std::string& name);
-	
 	ClapTrap(const ClapTrap &old);
 	ClapTrap &operator=(const ClapTrap &rhs);
 	~ClapTrap(void);
