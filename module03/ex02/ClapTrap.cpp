@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 23:08:20 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/15 04:13:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:14:51 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void ClapTrap::takeDamage(unsigned int amount)
 {
 	if (_hp >= amount)
 	{
-		std::cout << "ClapTrap has taken " << amount << " points of damage!" << std::endl;
+		std::cout << "ClapTrap " << _name << " has taken " << amount << " points of damage!" << std::endl;
 		_hp -= amount;
 	}
 }
@@ -70,7 +70,7 @@ void ClapTrap::beRepaired(unsigned int amount)
 {
 	if (_energy > 0)
 	{
-		std::cout << "ClapTrap has repaired itself for " << amount << " hp!" << std::endl;
+		std::cout << "ClapTrap " << _name << " has repaired itself for " << amount << " hp!" << std::endl;
 		_hp += amount;
 		_energy--;
 	}
