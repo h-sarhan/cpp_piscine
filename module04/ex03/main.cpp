@@ -1,32 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 07:29:34 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/13 10:14:19 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/10/13 10:21:20 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/10/13 10:21:29 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ANIMAL
-#define ANIMAL
 
-#include <iostream>
-
-class Animal
-{
-public:
-    Animal(void);
-    Animal(const Animal &old);
-    Animal &operator=(const Animal &rhs);
-    virtual ~Animal(void);
-
-    virtual void makeSound(void) const = 0;
-    const std::string &getType(void) const;
-
-protected:
-    std::string type;
-};
-#endif
+int main(){}
