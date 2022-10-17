@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   whatever.hpp                                       :+:      :+:    :+:   */
+/*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 12:12:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/17 12:14:44 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/10/17 11:50:23 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/10/17 13:51:22 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WHATEVER
-#define WHATEVER
-#include <iostream>
+#ifndef ARRAY
+#define ARRAY
 
-template <typename T> void swap(T &a, T &b)
+#include <stdexcept>
+template <class T> class Array
 {
-    T	temp;
+public:
+    Array(void);
+    Array(unsigned int n);
 
-	temp = a;
-	a = b;
-	b = temp;
-}
+    Array(const Array &old);
+    Array &operator=(const Array &rhs);
+    ~Array(void);
 
-template <typename T> T &min(T &a,T &b)
-{
-    if (a < b)
-        return (a);
-    return (b);
-}
+    T &operator[](unsigned int idx) const;
+    unsigned int size() const;
 
-template <typename T> T &max(T &a, T &b)
-{
-    if (a > b)
-        return (a);
-    return (b);
-}
-
-#endif WHATEVER
+private:
+    unsigned int _size;
+    T *_arr;
+};
+#include "Array.tpp"
+#endif
