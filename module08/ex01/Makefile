@@ -6,7 +6,7 @@
 #    By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/04 00:48:08 by hsarhan           #+#    #+#              #
-#    Updated: 2022/10/17 15:26:39 by hsarhan          ###   ########.fr        #
+#    Updated: 2022/10/19 23:56:08 by hsarhan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = span
 
-SRC = main.cpp
+SRC = main.cpp Span.cpp
 
 OBJ := $(SRC:%.cpp=%.o)
 

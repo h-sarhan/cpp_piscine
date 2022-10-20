@@ -1,42 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cure.cpp                                           :+:      :+:    :+:   */
+/*   IMateriaSource.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/13 11:26:16 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/20 10:06:18 by hsarhan          ###   ########.fr       */
+/*   Created: 2022/10/20 09:23:03 by hsarhan           #+#    #+#             */
+/*   Updated: 2022/10/20 09:24:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cure.hpp"
+#ifndef IMATERIA_SOURCE
+#define IMATERIA_SOURCE
 
-Cure::Cure(void) : AMateria("cure")
-{
-}
+#include "AMateria.hpp"
 
-Cure::Cure(const Cure &old): AMateria(old)
+class IMateriaSource
 {
-}
-
-Cure &Cure::operator=(const Cure &rhs)
-{
-	(void)rhs;
-	return (*this);
-}
-
-Cure::~Cure(void)
-{
-}
-
-AMateria *Cure::clone() const
-{
-	Cure *clone = new Cure();
-	return (clone);
-}
-
-void Cure::use(ICharacter &target)
-{
-	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
-}
+public:
+    virtual ~IMateriaSource() {}
+    virtual void learnMateria(AMateria *) = 0;
+    virtual AMateria *createMateria(std::string const &type) = 0;
+};
+#endif
