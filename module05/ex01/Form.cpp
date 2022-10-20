@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 12:46:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/17 18:49:28 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/20 10:29:19 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ Form &Form::operator=(const Form &rhs)
 	{
 		return (*this);
 	}
-	*this = Form(rhs._name, rhs._signingGrade, rhs._executionGrade);
 	this->_signed = rhs._signed;
 	return (*this);
 }
@@ -90,17 +89,17 @@ Form::~Form(void)
 
 const char *Form::GradeTooHighException::what() const throw()
 {
-	return ("Form grade too high");
+	return ("Grade too high");
 }
 
 const char *Form::GradeTooLowException::what() const throw()
 {
-	return ("Form grade too low");
+	return ("Grade too low");
 }
 
 void Form::beSigned(const Bureaucrat &bureaucrat)
 {
-	if (bureaucrat.getGrade() >= _signingGrade)
+	if (bureaucrat.getGrade() <= _signingGrade)
 	{
 		_signed = true;
 	}

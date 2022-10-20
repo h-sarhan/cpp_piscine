@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:35:44 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/20 10:15:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/20 10:25:32 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ size_t Bureaucrat::getGrade(void) const
 
 void Bureaucrat::incrementGrade(void)
 {
-	if (_grade < 1)
+	if (_grade <= 1)
 	{
 		throw GradeTooHighException();
 	}
@@ -73,7 +73,7 @@ void Bureaucrat::incrementGrade(void)
 
 void Bureaucrat::decrementGrade(void)
 {
-	if (_grade > 150)
+	if (_grade >= 150)
 	{
 		throw GradeTooLowException();
 	}
