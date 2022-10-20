@@ -6,39 +6,21 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:50:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/20 11:42:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:37:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Form.hpp"
+#include "Intern.hpp"
 
 int main(void)
 {
-	Bureaucrat b = Bureaucrat("bob", 137);
-	Bureaucrat c = Bureaucrat("christina", 1);
-	ShrubberyCreationForm shrubForm("home");
-	RobotomyRequestForm robotomyForm("Elliot");
-	PresidentialPardonForm presForm("Jon");
-
-	// Cannot execute without signing
-	b.executeForm(shrubForm);
-
-	// Shrubbery form
-	b.signForm(shrubForm);
-	b.executeForm(shrubForm);
-
-	// Robotomy form
-	c.signForm(robotomyForm);
-	c.executeForm(robotomyForm);
-
-	// Grade too low
-	b.signForm(presForm);
-	b.executeForm(presForm);
-
-	// Presidential pardon form
-	c.signForm(presForm);
-	c.executeForm(presForm);
+    Intern someRandomIntern;
+    Form *rrf;
+    rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+    Bureaucrat b = Bureaucrat("benjamin", 1);
+    b.signForm(*rrf);
+    b.executeForm(*rrf);
+    delete rrf;
 }
