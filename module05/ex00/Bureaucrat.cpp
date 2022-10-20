@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:35:44 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/16 12:51:18 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/20 10:15:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &rhs)
 	std::cout << "Bureaucrat copy assignment constructor called" << std::endl;
 	if (&rhs == this)
 		return (*this);
-	*this = Bureaucrat(rhs);
+	this->_grade = rhs._grade;
 	return (*this);
 }
 
@@ -92,5 +92,6 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
 {
-	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << ".";
+	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << "." << std::endl;
+	return (os);
 }
