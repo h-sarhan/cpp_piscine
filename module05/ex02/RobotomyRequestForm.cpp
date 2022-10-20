@@ -52,7 +52,15 @@ void RobotomyRequestForm::execute(const Bureaucrat& executor) const
 	if (getSigned() == true && executor.getGrade() <= getExecutionGrade())
 	{
 		std::cout << "<DRILLING NOISES~~~~~~~~~~~~~~~~~~~~~~>" << std::endl;
-		std::cout << "Robotomy successful maybe" << std::endl;
+		std::srand(time(NULL));
+		if (std::rand() % 2 == 0)
+		{
+			std::cout << "Robotomy successful" << std::endl;
+		}
+		else
+		{
+			std::cout << "Robotomy has failed" << std::endl;
+		}
 	}
 	else if (executor.getGrade() <= getExecutionGrade())
 	{

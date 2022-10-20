@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 23:45:40 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 00:02:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/20 11:26:56 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void ShrubberyCreationForm::execute(const Bureaucrat& executor) const
 {
 	if (getSigned() == true && executor.getGrade() <= getExecutionGrade())
 	{
-		std::cout << "Drawing trees" << std::endl;
+		std::ofstream file;
+		file.open((_target + "_shrubbery").c_str());
+		file << TREE << std::endl;
+		file.close();
 	}
 	else if (executor.getGrade() <= getExecutionGrade())
 	{

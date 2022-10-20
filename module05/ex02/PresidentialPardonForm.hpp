@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 20:42:31 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 00:07:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/20 11:22:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ public:
 	PresidentialPardonForm(const PresidentialPardonForm& old);
 	PresidentialPardonForm& operator=(const PresidentialPardonForm& rhs);
 	~PresidentialPardonForm(void);
-	
+
 	void execute(const Bureaucrat& executor) const;
 
 private:

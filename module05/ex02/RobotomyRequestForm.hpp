@@ -15,6 +15,7 @@
 
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
+#include <cstdlib>
 
 class Bureaucrat;
 
