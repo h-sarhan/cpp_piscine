@@ -6,12 +6,12 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:45:43 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/20 14:55:33 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:52:23 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Conversion.hpp"
 #include <iostream>
-
 
 
 int main(int argc, char **argv)
@@ -21,10 +21,17 @@ int main(int argc, char **argv)
         std::cout << "Please input a signle argument" << std::endl;
         return (1);
     }
-    Conversion conversion = Conversion(argv[1]);
+    try
+    {
+        Conversion conversion = Conversion(argv[1]);
 
-    std::cout << "char: " << charConv << std::endl;
-    std::cout << "int: " << intConv << std::endl;
-    std::cout << "float: " << floatConv << std::endl;
-    std::cout << "double: " << doubleConv << std::endl;
+        std::cout << "char: " << conversion.getChar() << std::endl;
+        std::cout << "int: " <<  conversion.getInt() << std::endl;
+        std::cout << "float: " << conversion.getFloat() << std::endl;
+        std::cout << "double: " << conversion.getDouble() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
