@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:32:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/21 20:04:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/21 20:13:55 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <iostream>
 
 // Dummy default constructor
-Conversion::Conversion(void) { _inputType = Conversion::INT; }
+Conversion::Conversion(void) : _inputType(Conversion::INT), _rawString("") {}
 
-Conversion::Conversion(const std::string &str)
+Conversion::Conversion(const std::string &str) : _rawString(str)
 {
     _inputType = _getLiteralType(str);
     std::cout << "Literal Type: ";
@@ -56,7 +56,10 @@ Conversion::Conversion(const std::string &str)
     }
 }
 
-Conversion::Conversion(const Conversion &old) : _inputType(old._inputType) {}
+Conversion::Conversion(const Conversion &old)
+    : _inputType(old._inputType), _rawString(old._rawString)
+{
+}
 
 Conversion &Conversion::operator=(const Conversion &rhs)
 {
@@ -65,6 +68,7 @@ Conversion &Conversion::operator=(const Conversion &rhs)
         return (*this);
     }
     _inputType = rhs._inputType;
+    _rawString = rhs._rawString;
     return (*this);
 }
 
@@ -105,7 +109,8 @@ enum Conversion::LiteralType Conversion::_parseDoubleLiteral(const std::string &
     // Checking for invalid characters
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (str[i] != '+' && str[i] != '-' && std::isdigit(str[i]) == false && str[i] != '.')
+        if (str[i] != '+' && str[i] != '-' && std::isdigit(str[i]) == false &&
+            str[i] != '.')
         {
             return (Conversion::ERROR);
         }
@@ -307,24 +312,28 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
     }
 }
 
-char Conversion::getChar(void)
+std::string Conversion::getChar(void)
 {
     switch (_inputType)
     {
+    // Example 'd'
     case Conversion::CHAR_NORMAL:
-        
-        break;
-    
+        return (_rawString[1]);
+    // Example ''
+    case Conversion::CHAR_ESCAPE:
+    {
+
+    }
     default:
         break;
     }
 }
 
-int Conversion::getInt(void) { return (0); }
+std::string Conversion::getInt(void) { return (0); }
 
-float Conversion::getFloat(void) { return (0.0f); }
+std::string Conversion::getFloat(void) { return (0.0f); }
 
-double Conversion::getDouble(void) { return (0.0); }
+std::string Conversion::getDouble(void) { return (0.0); }
 
 // Dummy destructor
 Conversion::~Conversion(void) {}

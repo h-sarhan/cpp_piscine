@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:58:24 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/21 20:01:27 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/21 20:14:08 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ public:
     Conversion &operator=(const Conversion &rhs);
     ~Conversion(void);
 
-    char getChar(void);
-    int getInt(void);
-    float getFloat(void);
-    double getDouble(void);
+    std::string getChar(void);
+    std::string getInt(void);
+    std::string getFloat(void);
+    std::string getDouble(void);
 
 private:
 	enum LiteralType _getLiteralType(const std::string &str);
@@ -52,7 +52,7 @@ private:
 	enum LiteralType _parseFloatLiteral(const std::string &str);
 	enum LiteralType _parseDoubleLiteral(const std::string &str);
 	enum LiteralType _inputType;
-	
+	std::string _rawString;
 };
 
 #endif
