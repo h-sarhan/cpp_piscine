@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:32:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/22 16:27:13 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/22 16:57:53 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,7 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
                 }
             }
             size_t octalVal;
-            std::istringstream(rest) >> std::oct >> octalVal;
+            std::stringstream(rest) >> std::oct >> octalVal;
             if (octalVal > 255)
             {
                 return (Conversion::ERROR);
@@ -307,7 +307,7 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
                 }
             }
             size_t hexVal;
-            std::istringstream(rest) >> std::hex >> hexVal;
+            std::stringstream(rest) >> std::hex >> hexVal;
             if (hexVal > 255)
             {
                 return (Conversion::ERROR);
@@ -370,7 +370,7 @@ char Conversion::getChar(void)
     case Conversion::CHAR_HEXA:
     {
         size_t hexVal;
-        std::istringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >> hexVal;
+        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >> hexVal;
         if (hexVal >= 32 && hexVal <= 126)
         {
             return (static_cast<char>(hexVal));
@@ -381,7 +381,7 @@ char Conversion::getChar(void)
     case Conversion::CHAR_OCTAL:
     {
         size_t octVal;
-        std::istringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >> octVal;
+        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >> octVal;
         if (octVal >= 32 && octVal <= 126)
         {
             return (static_cast<char>(octVal));
@@ -391,7 +391,7 @@ char Conversion::getChar(void)
     case Conversion::INT:
     {
         size_t intVal;
-        std::istringstream(_rawString) >> std::dec >> intVal;
+        std::stringstream(_rawString) >> std::dec >> intVal;
         if (intVal >= 32 && intVal <= 126)
         {
             return (static_cast<char>(intVal));
@@ -409,7 +409,7 @@ char Conversion::getChar(void)
     case Conversion::FLOAT:
     {
         float floatVal;
-        std::istringstream(_rawString.substr(0, _rawString.size() - 1)) >> floatVal;
+        std::stringstream(_rawString.substr(0, _rawString.size() - 1)) >> floatVal;
         if (floatVal >= 32.0f && floatVal <= 126.0f)
         {
             return (static_cast<char>(floatVal));
@@ -427,7 +427,7 @@ char Conversion::getChar(void)
     case Conversion::DOUBLE:
     {
         double doubleVal;
-        std::istringstream(_rawString) >> doubleVal;
+        std::stringstream(_rawString) >> doubleVal;
         if (doubleVal >= 32.0 && doubleVal <= 126.0)
         {
             return (static_cast<char>(doubleVal));
@@ -443,7 +443,107 @@ char Conversion::getChar(void)
     }
 }
 
-int Conversion::getInt(void) { return (0); }
+int Conversion::getInt(void)
+{
+    switch (_inputType)
+    {
+    // Example 'd'
+    case Conversion::CHAR_NORMAL:
+    {
+        return (static_cast<int>(_rawString[1]));
+    }
+    // Example '\n'
+    case Conversion::CHAR_ESCAPE:
+    {
+        switch (_rawString[2])
+        {
+        case 'a':
+            return (static_cast<int>('\a'));
+        case 'b':
+            return (static_cast<int>('\b'));
+        case 'f':
+            return (static_cast<int>('\f'));
+        case 'n':
+            return (static_cast<int>('\n'));
+        case 'r':
+            return (static_cast<int>('\r'));
+        case 't':
+            return (static_cast<int>('\t'));
+        case 'v':
+            return (static_cast<int>('\v'));
+        case '\'':
+            return (static_cast<int>('\''));
+        case '\\':
+            return (static_cast<int>('\\'));
+        case '\"':
+            return (static_cast<int>('\"'));
+        case '?':
+            return (static_cast<int>('\?'));
+        default:
+            throw (ImpossibleConversionException());
+        }
+    }
+    // Example '\xff'
+    case Conversion::CHAR_HEXA:
+    {
+        size_t hexVal;
+        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >> hexVal;
+        return (static_cast<int>(hexVal));
+    }
+    // Example '\177'
+    case Conversion::CHAR_OCTAL:
+    {
+        size_t octVal;
+        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >> octVal;
+        return (static_cast<int>(octVal));
+    }
+    case Conversion::INT:
+    {
+        int intVal;
+        std::stringstream ss(_rawString);
+        ss >> std::dec >> intVal;
+        if (!ss.fail())
+        {
+            return (intVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT_PSEUDO:
+    {
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT:
+    {
+        const std::string intSubstr = _rawString.substr(0, _rawString.find("."));
+        int intVal;
+        std::stringstream ss(_rawString);
+        ss >> std::dec >> intVal;
+        if (!ss.fail())
+        {
+            return (intVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE_PSEUDO:
+    {
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE:
+    {
+        const std::string intSubstr = _rawString.substr(0, _rawString.find("."));
+        int intVal;
+        std::stringstream ss(_rawString);
+        ss >> std::dec >> intVal;
+        if (!ss.fail())
+        {
+            return (intVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    default:
+        throw (ImpossibleConversionException());
+    }
+}
 
 float Conversion::getFloat(void) { return (0.0f); }
 
