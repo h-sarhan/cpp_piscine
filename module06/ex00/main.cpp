@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:45:43 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/21 16:52:23 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/22 14:06:41 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,20 @@ int main(int argc, char **argv)
     try
     {
         Conversion conversion = Conversion(argv[1]);
+        try
+        {
+            const char charConv = conversion.getChar();
+            std::cout << "char: " << charConv << std::endl;
+        }
+        catch(const Conversion::ImpossibleConversionException& e)
+        {
+            std::cout << "char: impossible" << std::endl;
+        }
+        catch(const Conversion::NonDisplayableCharacterException& e)
+        {
+            std::cout << "char: Non displayable" << std::endl;
+        }
 
-        std::cout << "char: " << conversion.getChar() << std::endl;
         std::cout << "int: " <<  conversion.getInt() << std::endl;
         std::cout << "float: " << conversion.getFloat() << std::endl;
         std::cout << "double: " << conversion.getDouble() << std::endl;

@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:30:25 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/17 22:27:31 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/22 13:43:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ public:
 	{
 		const char *what() const throw();
 	};
-	
+
 	class GradeTooLowException : public std::exception
 	{
 		const char *what() const throw();

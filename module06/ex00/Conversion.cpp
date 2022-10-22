@@ -6,13 +6,12 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:32:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/21 20:13:55 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/22 16:27:13 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Conversion.hpp"
 
-#include <iostream>
 
 // Dummy default constructor
 Conversion::Conversion(void) : _inputType(Conversion::INT), _rawString("") {}
@@ -92,6 +91,7 @@ enum Conversion::LiteralType Conversion::_getLiteralType(const std::string &str)
     {
         return (_parseFloatLiteral(str));
     }
+    // Check if double literal
     if (str == "-inf" || str == "+inf" || str == "nan" ||
         (str.find(".") != std::string::npos))
     {
@@ -208,6 +208,11 @@ enum Conversion::LiteralType Conversion::_parseFloatLiteral(const std::string &s
     {
         return (Conversion::ERROR);
     }
+    // Check that the last character is f
+    if (str[str.size() - 1] != 'f')
+    {
+        return (Conversion::ERROR);
+    }
     // Check for + or - in the middle of the number
     for (size_t i = 1; i < str.size(); i++)
     {
@@ -281,7 +286,8 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
                     return (Conversion::ERROR);
                 }
             }
-            const size_t octalVal = std::strtoul(rest.c_str(), NULL, 8);
+            size_t octalVal;
+            std::istringstream(rest) >> std::oct >> octalVal;
             if (octalVal > 255)
             {
                 return (Conversion::ERROR);
@@ -300,8 +306,8 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
                     return (Conversion::ERROR);
                 }
             }
-            const size_t hexVal =
-                std::strtoul(rest.substr(1, rest.size() - 1).c_str(), NULL, 16);
+            size_t hexVal;
+            std::istringstream(rest) >> std::hex >> hexVal;
             if (hexVal > 255)
             {
                 return (Conversion::ERROR);
@@ -312,28 +318,136 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
     }
 }
 
-std::string Conversion::getChar(void)
+const char *Conversion::ImpossibleConversionException::what() const throw()
+{
+	return ("Impossible conversion");
+}
+
+const char *Conversion::NonDisplayableCharacterException::what() const throw()
+{
+	return ("Non displayable character");
+}
+
+char Conversion::getChar(void)
 {
     switch (_inputType)
     {
     // Example 'd'
     case Conversion::CHAR_NORMAL:
-        return (_rawString[1]);
-    // Example ''
+    {
+        if (_rawString[1] >= 32 && _rawString[1] <= 126)
+        {
+            return (_rawString[1]);
+        }
+        throw NonDisplayableCharacterException();
+    }
+    // Example '\n'
     case Conversion::CHAR_ESCAPE:
     {
-
+        switch (_rawString[2])
+        {
+        case 'a':
+        case 'b':
+        case 'f':
+        case 'n':
+        case 'r':
+        case 't':
+        case 'v':
+            throw NonDisplayableCharacterException();
+        case '\'':
+            return ('\'');
+        case '\\':
+            return ('\\');
+        case '\"':
+            return ('\"');
+        case '?':
+            return ('\?');
+        default:
+            throw (ImpossibleConversionException());
+        }
+    }
+    // Example '\xff'
+    case Conversion::CHAR_HEXA:
+    {
+        size_t hexVal;
+        std::istringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >> hexVal;
+        if (hexVal >= 32 && hexVal <= 126)
+        {
+            return (static_cast<char>(hexVal));
+        }
+        throw NonDisplayableCharacterException();
+    }
+    // Example '\177'
+    case Conversion::CHAR_OCTAL:
+    {
+        size_t octVal;
+        std::istringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >> octVal;
+        if (octVal >= 32 && octVal <= 126)
+        {
+            return (static_cast<char>(octVal));
+        }
+        throw NonDisplayableCharacterException();
+    }
+    case Conversion::INT:
+    {
+        size_t intVal;
+        std::istringstream(_rawString) >> std::dec >> intVal;
+        if (intVal >= 32 && intVal <= 126)
+        {
+            return (static_cast<char>(intVal));
+        }
+        if (intVal < 32 || intVal == 127)
+        {
+            throw NonDisplayableCharacterException();
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT_PSEUDO:
+    {
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT:
+    {
+        float floatVal;
+        std::istringstream(_rawString.substr(0, _rawString.size() - 1)) >> floatVal;
+        if (floatVal >= 32.0f && floatVal <= 126.0f)
+        {
+            return (static_cast<char>(floatVal));
+        }
+        if (floatVal < 32.0f || floatVal == 127.0f)
+        {
+            throw NonDisplayableCharacterException();
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE_PSEUDO:
+    {
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE:
+    {
+        double doubleVal;
+        std::istringstream(_rawString) >> doubleVal;
+        if (doubleVal >= 32.0 && doubleVal <= 126.0)
+        {
+            return (static_cast<char>(doubleVal));
+        }
+        if (doubleVal < 32.0 || doubleVal == 127.0)
+        {
+            throw NonDisplayableCharacterException();
+        }
+        throw ImpossibleConversionException();
     }
     default:
-        break;
+        throw (ImpossibleConversionException());
     }
 }
 
-std::string Conversion::getInt(void) { return (0); }
+int Conversion::getInt(void) { return (0); }
 
-std::string Conversion::getFloat(void) { return (0.0f); }
+float Conversion::getFloat(void) { return (0.0f); }
 
-std::string Conversion::getDouble(void) { return (0.0); }
+double Conversion::getDouble(void) { return (0.0); }
 
 // Dummy destructor
 Conversion::~Conversion(void) {}

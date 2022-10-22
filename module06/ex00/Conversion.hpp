@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:58:24 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/21 20:14:08 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/22 16:21:12 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 #include <string>
 #include <stdexcept>
 #include <cctype>
-#include <cstdlib>
+#include <sstream>
+#include <iostream>
 
+// TODO Remove use of std::isdigit
 class Conversion
 {
 public:
@@ -40,10 +42,20 @@ public:
     Conversion &operator=(const Conversion &rhs);
     ~Conversion(void);
 
-    std::string getChar(void);
-    std::string getInt(void);
-    std::string getFloat(void);
-    std::string getDouble(void);
+    class NonDisplayableCharacterException : public std::exception
+	{
+		const char *what() const throw();
+	};
+
+    class ImpossibleConversionException : public std::exception
+	{
+		const char *what() const throw();
+	};
+
+    char getChar(void);
+    int getInt(void);
+    float getFloat(void);
+    double getDouble(void);
 
 private:
 	enum LiteralType _getLiteralType(const std::string &str);
