@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 14:55:39 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/23 15:18:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/23 15:19:43 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void identify(Base &p)
     }
     catch (const std::exception &e)
     {
-		
     }
     try
     {
