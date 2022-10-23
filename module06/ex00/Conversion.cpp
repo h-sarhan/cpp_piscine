@@ -6,12 +6,11 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:32:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/22 16:57:53 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/23 14:20:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Conversion.hpp"
-
 
 // Dummy default constructor
 Conversion::Conversion(void) : _inputType(Conversion::INT), _rawString("") {}
@@ -87,7 +86,8 @@ enum Conversion::LiteralType Conversion::_getLiteralType(const std::string &str)
     }
     // Check if float literal by checking if it is a pseudo literal or if it contains 'f'
     if (str == "-inff" || str == "+inff" || str == "nanf" ||
-        (str.find("f") != std::string::npos))
+        (str.find("f") != std::string::npos && str != "-inf" && str != "+inf" &&
+         str != "nan"))
     {
         return (_parseFloatLiteral(str));
     }
@@ -109,8 +109,7 @@ enum Conversion::LiteralType Conversion::_parseDoubleLiteral(const std::string &
     // Checking for invalid characters
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (str[i] != '+' && str[i] != '-' && std::isdigit(str[i]) == false &&
-            str[i] != '.')
+        if (str[i] != '+' && str[i] != '-' && _isDigit(str[i]) == false && str[i] != '.')
         {
             return (Conversion::ERROR);
         }
@@ -119,7 +118,7 @@ enum Conversion::LiteralType Conversion::_parseDoubleLiteral(const std::string &
     bool containsNumbers = false;
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (std::isdigit(str[i]) == true)
+        if (_isDigit(str[i]) == true)
         {
             containsNumbers = true;
         }
@@ -166,7 +165,7 @@ enum Conversion::LiteralType Conversion::_parseFloatLiteral(const std::string &s
     // Checking for invalid characters
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (str[i] != '+' && str[i] != '-' && std::isdigit(str[i]) == false &&
+        if (str[i] != '+' && str[i] != '-' && _isDigit(str[i]) == false &&
             str[i] != 'f' && str[i] != '.')
         {
             return (Conversion::ERROR);
@@ -176,7 +175,7 @@ enum Conversion::LiteralType Conversion::_parseFloatLiteral(const std::string &s
     bool containsNumbers = false;
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (std::isdigit(str[i]) == true)
+        if (_isDigit(str[i]) == true)
         {
             containsNumbers = true;
         }
@@ -229,7 +228,7 @@ enum Conversion::LiteralType Conversion::_parseIntLiteral(const std::string &str
     // Checking for invalid characters
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (str[i] != '+' && str[i] != '-' && std::isdigit(str[i]) == false)
+        if (str[i] != '+' && str[i] != '-' && _isDigit(str[i]) == false)
         {
             return (Conversion::ERROR);
         }
@@ -238,7 +237,7 @@ enum Conversion::LiteralType Conversion::_parseIntLiteral(const std::string &str
     bool allSigns = true;
     for (size_t i = 0; i < str.size(); i++)
     {
-        if (std::isdigit(str[i]) == true)
+        if (_isDigit(str[i]) == true)
         {
             allSigns = false;
             break;
@@ -281,7 +280,7 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
         {
             for (size_t i = 0; i < rest.size(); i++)
             {
-                if (std::isdigit(rest[i]) == false)
+                if (_isDigit(rest[i]) == false)
                 {
                     return (Conversion::ERROR);
                 }
@@ -299,9 +298,8 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
         {
             for (size_t i = 1; i < rest.size(); i++)
             {
-                if (std::isdigit(rest[i]) == false &&
-                    std::string("abcdef").find(std::tolower(rest[i])) ==
-                        std::string::npos)
+                if (_isDigit(rest[i]) == false && std::string("abcdef").find(std::tolower(
+                                                      rest[i])) == std::string::npos)
                 {
                     return (Conversion::ERROR);
                 }
@@ -320,12 +318,12 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
 
 const char *Conversion::ImpossibleConversionException::what() const throw()
 {
-	return ("Impossible conversion");
+    return ("Impossible conversion");
 }
 
 const char *Conversion::NonDisplayableCharacterException::what() const throw()
 {
-	return ("Non displayable character");
+    return ("Non displayable character");
 }
 
 char Conversion::getChar(void)
@@ -363,14 +361,15 @@ char Conversion::getChar(void)
         case '?':
             return ('\?');
         default:
-            throw (ImpossibleConversionException());
+            throw ImpossibleConversionException();
         }
     }
     // Example '\xff'
     case Conversion::CHAR_HEXA:
     {
         size_t hexVal;
-        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >> hexVal;
+        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >>
+            hexVal;
         if (hexVal >= 32 && hexVal <= 126)
         {
             return (static_cast<char>(hexVal));
@@ -381,7 +380,8 @@ char Conversion::getChar(void)
     case Conversion::CHAR_OCTAL:
     {
         size_t octVal;
-        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >> octVal;
+        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >>
+            octVal;
         if (octVal >= 32 && octVal <= 126)
         {
             return (static_cast<char>(octVal));
@@ -439,7 +439,7 @@ char Conversion::getChar(void)
         throw ImpossibleConversionException();
     }
     default:
-        throw (ImpossibleConversionException());
+        throw ImpossibleConversionException();
     }
 }
 
@@ -480,21 +480,23 @@ int Conversion::getInt(void)
         case '?':
             return (static_cast<int>('\?'));
         default:
-            throw (ImpossibleConversionException());
+            throw ImpossibleConversionException();
         }
     }
     // Example '\xff'
     case Conversion::CHAR_HEXA:
     {
         size_t hexVal;
-        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >> hexVal;
+        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >>
+            hexVal;
         return (static_cast<int>(hexVal));
     }
     // Example '\177'
     case Conversion::CHAR_OCTAL:
     {
         size_t octVal;
-        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >> octVal;
+        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >>
+            octVal;
         return (static_cast<int>(octVal));
     }
     case Conversion::INT:
@@ -514,13 +516,12 @@ int Conversion::getInt(void)
     }
     case Conversion::FLOAT:
     {
-        const std::string intSubstr = _rawString.substr(0, _rawString.find("."));
-        int intVal;
-        std::stringstream ss(_rawString);
-        ss >> std::dec >> intVal;
+        std::stringstream ss(_rawString.substr(0, _rawString.size() - 1));
+        float floatVal;
+        ss >> floatVal;
         if (!ss.fail())
         {
-            return (intVal);
+            return (static_cast<int>(floatVal));
         }
         throw ImpossibleConversionException();
     }
@@ -530,24 +531,279 @@ int Conversion::getInt(void)
     }
     case Conversion::DOUBLE:
     {
-        const std::string intSubstr = _rawString.substr(0, _rawString.find("."));
-        int intVal;
-        std::stringstream ss(_rawString);
-        ss >> std::dec >> intVal;
+        std::stringstream ss(_rawString.substr(0, _rawString.size() - 1));
+        double doubleVal;
+        ss >> doubleVal;
         if (!ss.fail())
         {
-            return (intVal);
+            return (static_cast<int>(doubleVal));
         }
         throw ImpossibleConversionException();
     }
     default:
-        throw (ImpossibleConversionException());
+        throw ImpossibleConversionException();
     }
 }
 
-float Conversion::getFloat(void) { return (0.0f); }
+float Conversion::getFloat(void)
+{
+    switch (_inputType)
+    {
+    // Example 'd'
+    case Conversion::CHAR_NORMAL:
+    {
+        return (static_cast<float>(_rawString[1]));
+    }
+    // Example '\n'
+    case Conversion::CHAR_ESCAPE:
+    {
+        switch (_rawString[2])
+        {
+        case 'a':
+            return (static_cast<float>('\a'));
+        case 'b':
+            return (static_cast<float>('\b'));
+        case 'f':
+            return (static_cast<float>('\f'));
+        case 'n':
+            return (static_cast<float>('\n'));
+        case 'r':
+            return (static_cast<float>('\r'));
+        case 't':
+            return (static_cast<float>('\t'));
+        case 'v':
+            return (static_cast<float>('\v'));
+        case '\'':
+            return (static_cast<float>('\''));
+        case '\\':
+            return (static_cast<float>('\\'));
+        case '\"':
+            return (static_cast<float>('\"'));
+        case '?':
+            return (static_cast<float>('\?'));
+        default:
+            throw ImpossibleConversionException();
+        }
+    }
+    // Example '\xff'
+    case Conversion::CHAR_HEXA:
+    {
+        size_t hexVal;
+        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >>
+            hexVal;
+        return (static_cast<float>(hexVal));
+    }
+    // Example '\177'
+    case Conversion::CHAR_OCTAL:
+    {
+        size_t octVal;
+        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >>
+            octVal;
+        return (static_cast<float>(octVal));
+    }
+    case Conversion::INT:
+    {
+        float floatVal;
+        std::stringstream ss(_rawString);
+        ss >> floatVal;
+        if (!ss.fail())
+        {
+            return (floatVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT_PSEUDO:
+    {
+        if (_rawString == "nanf")
+        {
+            return (std::numeric_limits<float>::quiet_NaN());
+        }
+        if (_rawString == "+inff")
+        {
+            return (std::numeric_limits<float>::infinity());
+        }
+        if (_rawString == "-inff")
+        {
+            return (-std::numeric_limits<float>::infinity());
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT:
+    {
+        const std::string floatSubstr = _rawString.substr(0, _rawString.size() - 1);
+        float floatVal;
+        std::stringstream ss(floatSubstr);
+        ss >> floatVal;
+        if (!ss.fail())
+        {
+            return (floatVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE_PSEUDO:
+    {
+        if (_rawString == "nan")
+        {
+            return (std::numeric_limits<float>::quiet_NaN());
+        }
+        if (_rawString == "+inf")
+        {
+            return (std::numeric_limits<float>::infinity());
+        }
+        if (_rawString == "-inf")
+        {
+            return (-std::numeric_limits<float>::infinity());
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE:
+    {
+        float floatVal;
+        std::stringstream ss(_rawString);
+        ss >> floatVal;
+        if (!ss.fail())
+        {
+            return (floatVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    default:
+        throw ImpossibleConversionException();
+    }
+}
 
-double Conversion::getDouble(void) { return (0.0); }
+double Conversion::getDouble(void)
+{
+    switch (_inputType)
+    {
+    // Example 'd'
+    case Conversion::CHAR_NORMAL:
+    {
+        return (static_cast<double>(_rawString[1]));
+    }
+    // Example '\n'
+    case Conversion::CHAR_ESCAPE:
+    {
+        switch (_rawString[2])
+        {
+        case 'a':
+            return (static_cast<double>('\a'));
+        case 'b':
+            return (static_cast<double>('\b'));
+        case 'f':
+            return (static_cast<double>('\f'));
+        case 'n':
+            return (static_cast<double>('\n'));
+        case 'r':
+            return (static_cast<double>('\r'));
+        case 't':
+            return (static_cast<double>('\t'));
+        case 'v':
+            return (static_cast<double>('\v'));
+        case '\'':
+            return (static_cast<double>('\''));
+        case '\\':
+            return (static_cast<double>('\\'));
+        case '\"':
+            return (static_cast<double>('\"'));
+        case '?':
+            return (static_cast<double>('\?'));
+        default:
+            throw ImpossibleConversionException();
+        }
+    }
+    // Example '\xff'
+    case Conversion::CHAR_HEXA:
+    {
+        size_t hexVal;
+        std::stringstream(_rawString.substr(3, _rawString.size() - 3)) >> std::hex >>
+            hexVal;
+        return (static_cast<double>(hexVal));
+    }
+    // Example '\177'
+    case Conversion::CHAR_OCTAL:
+    {
+        size_t octVal;
+        std::stringstream(_rawString.substr(2, _rawString.size() - 2)) >> std::oct >>
+            octVal;
+        return (static_cast<double>(octVal));
+    }
+    case Conversion::INT:
+    {
+        double doubleVal;
+        std::stringstream ss(_rawString);
+        ss >> doubleVal;
+        if (!ss.fail())
+        {
+            return (doubleVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT_PSEUDO:
+    {
+        if (_rawString == "nanf")
+        {
+            return (std::numeric_limits<double>::quiet_NaN());
+        }
+        if (_rawString == "+inff")
+        {
+            return (std::numeric_limits<double>::infinity());
+        }
+        if (_rawString == "-inff")
+        {
+            return (-std::numeric_limits<double>::infinity());
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::FLOAT:
+    {
+        const std::string floatSubstr = _rawString.substr(0, _rawString.size() - 1);
+        double doubleVal;
+        std::stringstream ss(floatSubstr);
+        ss >> doubleVal;
+        if (!ss.fail())
+        {
+            return (doubleVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE_PSEUDO:
+    {
+        if (_rawString == "nan")
+        {
+            return (std::numeric_limits<double>::quiet_NaN());
+        }
+        if (_rawString == "+inf")
+        {
+            return (std::numeric_limits<double>::infinity());
+        }
+        if (_rawString == "-inf")
+        {
+            return (-std::numeric_limits<double>::infinity());
+        }
+        throw ImpossibleConversionException();
+    }
+    case Conversion::DOUBLE:
+    {
+        double doubleVal;
+        std::stringstream ss(_rawString);
+        ss >> doubleVal;
+        if (!ss.fail())
+        {
+            return (doubleVal);
+        }
+        throw ImpossibleConversionException();
+    }
+    default:
+        throw ImpossibleConversionException();
+    }
+}
+
+bool Conversion::_isDigit(const char ch)
+{
+    const std::string digits = "0123456789";
+    return (digits.find(ch) != std::string::npos);
+}
 
 // Dummy destructor
 Conversion::~Conversion(void) {}
