@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 09:07:20 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 08:26:12 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/23 16:33:54 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,44 @@
 #include <fstream>
 #include <iostream>
 
-int strReplace(int argc, char **argv)
+int main(int argc, char **argv)
 {
     if (argc != 4)
     {
         std::cerr << "Invalid arguments!!" << std::endl;
-        std::exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
     const std::string fileName = argv[1];
     const std::string str1 = argv[2];
     const std::string str2 = argv[3];
+
+    // Checking if file names are invalid
     if (fileName.length() == 0)
     {
         std::cerr << "Invalid filename!!" << std::endl;
-        std::exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
     if (str1.length() == 0)
     {
         std::cerr << "str1 cannot be empty!!" << std::endl;
-        std::exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
     if (str1 == str2)
     {
         std::cerr << "str1 cannot be equal to str2!!" << std::endl;
-        std::exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
     std::string contents;
     char c;
     std::ifstream inStream(fileName.c_str(), std::ifstream::in);
+    // Checking if input file can be opened
     if (!inStream.good())
     {
         std::cerr << "Could not open file for reading" << std::endl;
         inStream.close();
-        std::exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
+    // Reading characters into a string
     while (inStream.good())
     {
         inStream.get(c);
@@ -55,13 +59,15 @@ int strReplace(int argc, char **argv)
             contents.push_back(c);
     }
     inStream.close();
+    // If input file is empty just create an empty output file
     if (contents.length() == 0)
     {
         std::ofstream outStream((fileName + ".replace").c_str(),
                                 std::ofstream::out | std::ofstream::trunc);
         outStream.close();
-        std::exit(EXIT_SUCCESS);
+        return (EXIT_SUCCESS);
     }
+    // Keep replacing each occurence of the string until it is not there anymore
     while (contents.find(str1) != std::string::npos)
     {
         std::string before = contents.substr(0, contents.find(str1));
@@ -69,25 +75,21 @@ int strReplace(int argc, char **argv)
             contents.substr(contents.find(str1) + str1.length(), contents.length());
         contents = before + str2 + after;
     }
+    // Create an output file
     std::ofstream outStream((fileName + ".replace").c_str(),
                             std::ofstream::out | std::ofstream::trunc);
+    // Check if output file has been created properly
     if (!outStream.good())
     {
         std::cerr << "Could not open file for wrting" << std::endl;
         outStream.close();
-        std::exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
+    // Write string to output file
     outStream << contents;
     outStream.close();
-    std::exit(EXIT_SUCCESS);
-}
-
-int main(int argc, char **argv)
-{
-    strReplace(argc, argv);
     return (EXIT_SUCCESS);
 }
-
 
 // ./str_replace bible.txt God god
 // ./str_replace bible.txt "" god
