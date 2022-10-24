@@ -6,14 +6,13 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:36:18 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 08:37:20 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/23 22:04:04 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FIXED
 #define FIXED
 
-#include <cmath>
 #include <iostream>
 
 class Fixed

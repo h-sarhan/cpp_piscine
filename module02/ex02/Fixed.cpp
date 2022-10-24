@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:41:53 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/09/18 09:06:11 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/23 22:58:52 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ Fixed::Fixed(const float num)
         }
     }
     const float epsilon = 1.0f / pow(2, _fracBits);
-    const float current = abs(toFloat());
+    const float current = abs(this->toFloat());
     const float target = abs(num);
     if (abs((current + epsilon) - target) < abs(current - target))
     {
@@ -272,6 +272,7 @@ Fixed Fixed::operator++(int)
     return (old);
 }
 
+// pre-decrement
 Fixed &Fixed::operator--(void)
 {
     Fixed dec;
