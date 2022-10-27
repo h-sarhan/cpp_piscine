@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:32:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/23 14:20:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/27 18:42:03 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,12 +275,16 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
     else
     {
         const std::string rest = inside.substr(1, inside.size() - 1);
+        if (rest.length() == 0)
+        {
+            return (Conversion::ERROR);
+        }
         // Checking for octal
         if (rest[0] != 'x' && rest.size() <= 3)
         {
             for (size_t i = 0; i < rest.size(); i++)
             {
-                if (_isDigit(rest[i]) == false)
+                if (_isDigit(rest[i]) == false || rest[i] == '8' || rest[i] == '9')
                 {
                     return (Conversion::ERROR);
                 }

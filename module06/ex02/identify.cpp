@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 14:55:39 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/23 15:19:43 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/27 18:39:39 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void identify(Base &p)
 {
     try
     {
-        dynamic_cast<A &>(p);
+        (void)dynamic_cast<A &>(p);
         std::cout << "Reference identified as A" << std::endl;
     }
     catch (const std::exception &e)
@@ -66,7 +66,7 @@ void identify(Base &p)
     }
     try
     {
-        dynamic_cast<B &>(p);
+        (void)dynamic_cast<B &>(p);
         std::cout << "Reference identified as B" << std::endl;
     }
     catch (const std::exception &e)
@@ -74,7 +74,7 @@ void identify(Base &p)
     }
     try
     {
-        dynamic_cast<C &>(p);
+        (void)dynamic_cast<C &>(p);
         std::cout << "Reference identified as C" << std::endl;
     }
     catch (const std::exception &e)
