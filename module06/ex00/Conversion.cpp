@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:32:33 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/27 18:42:03 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/27 20:08:45 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ enum Conversion::LiteralType Conversion::_parseCharLiteral(const std::string &st
     else
     {
         const std::string rest = inside.substr(1, inside.size() - 1);
-        if (rest.length() == 0)
+        if (rest.length() == 0 || (rest.length() == 1 && rest[0] == 'x'))
         {
             return (Conversion::ERROR);
         }
