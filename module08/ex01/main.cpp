@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 22:00:22 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/20 00:38:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/08 19:37:37 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int main()
     sp.addNumber(9);
     sp.addNumber(11);
     std::cout << "Normal example" << std::endl;
-    std::cout << sp.shortestSpan() << std::endl;
-    std::cout << sp.longestSpan() << std::endl;
+    std::cout << "Shortest span " << sp.shortestSpan() << std::endl;
+    std::cout << "Langest span " << sp.longestSpan() << std::endl;
 
     // Lots of numbers
     Span sp2 = Span(200000);
@@ -35,8 +35,8 @@ int main()
         sp2.addNumber(rand() % 400000000);
     }
     std::cout << std::endl << "Lots of numbers" << std::endl;
-    std::cout << sp2.shortestSpan() << std::endl;
-    std::cout << sp2.longestSpan() << std::endl;
+    std::cout << "Shortest span " << sp2.shortestSpan() << std::endl;
+    std::cout << "Langest span " <<  sp2.longestSpan() << std::endl;
 
     // Similar numbers
     Span sp3 = Span(10);
@@ -48,8 +48,8 @@ int main()
     sp3.addNumber(3);
     sp3.addNumber(8);
     std::cout << std::endl << "Similar numbers" << std::endl;
-    std::cout << sp3.shortestSpan() << std::endl;
-    std::cout << sp3.longestSpan() << std::endl;
+    std::cout << "Shortest span " <<sp3.shortestSpan() << std::endl;
+    std::cout << "Langest span " << sp3.longestSpan() << std::endl;
 
     // Exception handling
     std::cout << std::endl << "Exception handling" << std::endl;
@@ -85,9 +85,23 @@ int main()
     lst.push_back(5);
     lst.push_back(2);
     lst.push_back(6);
-    Span sp6 = Span(lst.begin(), lst.end());
-    std::cout << sp6.shortestSpan() << std::endl;
-    std::cout << sp6.longestSpan() << std::endl;
+    Span sp6 = Span(8);
+    sp6.addNumber(lst.begin(), lst.end());
+    std::cout << "Shortest span " << sp6.shortestSpan() << std::endl;
+    std::cout << "Langest span " <<  sp6.longestSpan() << std::endl;
+
+    try
+    {
+        Span sp7 = Span(7);
+        sp6.addNumber(lst.begin(), lst.end());
+        std::cout << "Shortest span " << sp6.shortestSpan() << std::endl;
+        std::cout << "Langest span " <<  sp6.longestSpan() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Error: " << e.what() << '\n';
+    }
+
 
     return 0;
 }

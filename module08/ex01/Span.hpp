@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   span.hpp                                           :+:      :+:    :+:   */
+/*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 22:00:38 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/20 00:37:36 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/08 19:38:15 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ public:
     Span(void);
     Span(unsigned int n);
     Span(const Span &old);
-	template<typename InputIt>
-	Span(InputIt first, InputIt last);
     Span &operator=(const Span &rhs);
 
     void addNumber(unsigned int num);
+	template<typename InputIt>
+    void addNumber(InputIt first, InputIt last);
     unsigned int shortestSpan(void);
     unsigned int longestSpan(void);
     ~Span(void);
@@ -40,13 +40,19 @@ private:
 };
 
 template<typename InputIt>
-Span::Span(InputIt first, InputIt last)
-    : _nums(), _isSorted(false)
+void Span::addNumber(InputIt first, InputIt last)
 {
+    if (std::distance(first, last) + _nums.size() > _maxNums)
+    {
+        throw std::length_error("Span is full");
+    }
     for (InputIt it = first; it != last; it++)
     {
 		_nums.push_back(*it);
     }
-	_maxNums = _nums.size();
+    if (_nums.size() > 1)
+    {
+        _isSorted = false;
+    }
 }
 #endif
