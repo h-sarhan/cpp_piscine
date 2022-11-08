@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:12:00 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/17 12:14:44 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/31 10:56:58 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,4 @@ template <typename T> T &max(T &a, T &b)
     return (b);
 }
 
-#endif WHATEVER
+#endif

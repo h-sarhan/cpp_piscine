@@ -6,19 +6,19 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:32:27 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/17 11:40:47 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:46:02 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "iter.hpp"
 #include <iostream>
 
-void	addOneAndPrint(int num)
+void	addOneAndPrint(const int &num)
 {
-	std::cout << "Num + 1 is " << num + 1 << std::endl;
+	std::cout << num << " + 1 is " << num + 1 << std::endl;
 }
 
-void	printFirstChar(std::string str)
+void	printFirstChar(const std::string &str)
 {
 	std::cout << "First char is " << str.substr(0, 1) << std::endl;
 }

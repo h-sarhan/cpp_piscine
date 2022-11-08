@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:15:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/17 13:51:29 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/10/31 10:55:25 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ template <typename T> Array<T>::Array(unsigned int n) : _size(n), _arr(new T[n])
 
 template <typename T> Array<T>::Array(const Array<T> &old) : _size(old.size())
 {
+    _arr = new T[old.size()];
     for (unsigned int i = 0; i < old.size(); i++)
     {
         _arr[i] = old[i];

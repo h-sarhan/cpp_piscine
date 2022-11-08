@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:16:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/17 13:56:38 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/08 15:58:24 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ int main(void)
     strs[2] = "Mark";
     std::cout << strs[0] << std::endl << strs[1] << std::endl << strs[2] << std::endl;
 
-    // Copy assignment constructor test
-    Array<std::string> strCopy;
-    strCopy = strs;
+    // Copy constructor test
+    Array<std::string> strCopy(strs);
     strCopy[1] = "Hello";
     std::cout << "Printing original" << std::endl;
     std::cout << strs[0] << std::endl << strs[1] << std::endl << strs[2] << std::endl;
@@ -47,6 +46,17 @@ int main(void)
     std::cout << strCopy[0] << std::endl
               << strCopy[1] << std::endl
               << strCopy[2] << std::endl;
+
+    // Copy assignment constructor test
+    Array<std::string> strCopy2;
+    strCopy2 = strs;
+    strCopy2[1] = "Hello";
+    std::cout << "Printing original" << std::endl;
+    std::cout << strs[0] << std::endl << strs[1] << std::endl << strs[2] << std::endl;
+    std::cout << "Printing copy" << std::endl;
+    std::cout << strCopy2[0] << std::endl
+              << strCopy2[1] << std::endl
+              << strCopy2[2] << std::endl;
 
     // Empty array test
     Array<std::string> empty;
