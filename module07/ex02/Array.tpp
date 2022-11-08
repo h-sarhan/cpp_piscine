@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:15:10 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/31 10:55:25 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:20:20 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,13 @@ template <typename T> Array<T> &Array<T>::operator=(const Array<T> &rhs)
 
 template <typename T> Array<T>::~Array(void) { delete[] _arr; }
 
-template <typename T> T &Array<T>::operator[](unsigned int idx) const
+template <typename T> T &Array<T>::operator[](const unsigned int idx)
+{
+    if (idx < 0 || idx >= _size)
+        throw std::out_of_range("Index out of range");
+    return (_arr[idx]);
+}
+template <typename T> const T &Array<T>::operator[](const unsigned int idx) const
 {
     if (idx < 0 || idx >= _size)
         throw std::out_of_range("Index out of range");

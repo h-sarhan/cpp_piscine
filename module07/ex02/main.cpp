@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 12:16:52 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/11/08 15:58:24 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:20:36 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,8 @@ int main(void)
     {
         std::cerr << e.what() << '\n';
     }
+    const Array<int> a(3);
+
+    a[0] = 3;
+    std::cout << a[0] << std::endl;
 }

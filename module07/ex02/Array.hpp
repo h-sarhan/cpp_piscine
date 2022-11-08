@@ -6,7 +6,7 @@
 /*   By: hsarhan <hsarhan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 11:50:23 by hsarhan           #+#    #+#             */
-/*   Updated: 2022/10/17 13:51:22 by hsarhan          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:18:49 by hsarhan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ public:
     Array &operator=(const Array &rhs);
     ~Array(void);
 
-    T &operator[](unsigned int idx) const;
+    T &operator[](const unsigned int idx);
+    const T &operator[](const unsigned int idx) const;
     unsigned int size() const;
 
 private:
